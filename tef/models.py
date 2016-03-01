@@ -9,13 +9,7 @@ class TE(models.Model):
                              on_delete=models.CASCADE,
                              null=True,
                              blank=False)
-    query = models.TextField(blank=False,
-                             validators=[
-                                RegexValidator(
-                                    '^[ACTGactg]*$',
-                                    'Must be a valid DNA sequence'
-                                )
-                             ])
+    query = models.TextField(blank=False)
     query_date = models.DateTimeField(auto_now_add=True)
     solved = models.BooleanField(default=False)
 
