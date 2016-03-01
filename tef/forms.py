@@ -8,6 +8,17 @@ class SearchForm(forms.Form):
     )
     start_loc = forms.IntegerField(
         label='Start Location',
+        min_value=0,
+    )
+    end_loc = forms.IntegerField(
+        label='End Location',
         min_value=0
     )
-    end_loc = forms.IntegerField(label='End Location')
+    threshold = forms.IntegerField(
+        label='Threshold',
+        min_value=0,
+    )
+
+    def clean_query(self):
+        data = self.cleaned_data['query']
+        return data.upper()
