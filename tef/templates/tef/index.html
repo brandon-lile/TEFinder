@@ -1,9 +1,5 @@
 <form action="{% url 'tef:search' %}" method="post">
-    {% csrf_token %}
-    <input type="text" name="te_query" value="">
-    <input type="number" name="start_loc" value="0">
-    <input type="number" name="end_loc" value="0">
-    <input type="submit" value="Search!" />
+    {% include "tef/forms/form_template.html" with form=search_form %}
 </form>
 {% if searches %}
     <ul>
