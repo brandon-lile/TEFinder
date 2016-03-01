@@ -36,7 +36,8 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.staticfiles',
-    'tef.apps.TefConfig'
+    'tef.apps.TefConfig',
+    'kombu.transport.django'
 ]
 
 MIDDLEWARE_CLASSES = [
