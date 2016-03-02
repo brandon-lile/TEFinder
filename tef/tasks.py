@@ -43,13 +43,14 @@ def queue_te(te):
             # Compare base by base
             if te.query[x] == te.reverse_query[x - cur_pos]:
                 total += 1
-                if total > te.threshold and in_sol is False:
+                if total >= te.threshold and in_sol is False:
                     in_sol = True
                     potential[cur_pos] = [x for x in range(x - te.threshold, x)]
                     potential[cur_pos].append(x)
-                elif total > te.threshold and in_sol is not False:
+                elif total >= te.threshold and in_sol is not False:
                     potential[cur_pos].append(x)
             else:
+                in_sol = False
                 total = 0
 
         cur_pos -= 1
