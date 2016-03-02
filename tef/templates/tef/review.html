@@ -15,7 +15,28 @@
                   </div>
                 </div>
             {% else %}
-
+                <table class="ui celled table courier">
+                    <thead>
+                        <tr>
+                            <th>Sequence</th>
+                            <th>Matches</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for size, soln in solns %}
+                            <tr>
+                                <td>
+                                    {{ orig }}
+                                    <br />
+                                    {{ soln }}
+                                </td>
+                                <td>
+                                    {{ size }}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             {% endif %}
         </div>
     </div>
