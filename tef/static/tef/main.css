@@ -1,0 +1,11 @@
+body {
+    background-color: #DADADA;
+}
+
+.ui.middle.aligned.grid {
+    margin-top: 70px;
+}
+
+.courier {
+    font-family: Courier, Lucida Sans Typewriter, Lucida Typewriter, monospace !important;
+}

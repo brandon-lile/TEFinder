@@ -55,5 +55,6 @@ def queue_te(te):
         cur_pos -= 1
 
     te.solution = json.dumps(potential)
+    te.solved = True
     te.save()
     return None

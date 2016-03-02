@@ -1,14 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>TE Review</title>
-</head>
-<body>
-    {% if te.solved == False %}
-        Reload the page in a bit. We're not quite done with your query yet.
-    {% else %}
+{% include "tef/layout/header.html" %}
+<div class="ui middle aligned grid">
+    <div class="column">
+        <div class="ui stacked segment">
+            <h2 class="ui teal header">Search Analysis</h2>
+            <div class="ui divider"></div>
+            {% if te.solved == False %}
+                <div class="ui icon message">
+                    <i class="notched circle loading icon"></i>
+                    <div class="content">
+                    <div class="header">
+                        Search Queued
+                    </div>
+                    <p>Your search is on the queue for completion. Please check back shortly for your results</p>
+                  </div>
+                </div>
+            {% else %}
 
-    {% endif %}
-</body>
-</html>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% include "tef/layout/footer.html" %}
