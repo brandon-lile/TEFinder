@@ -3,7 +3,6 @@ from celery import shared_task
 import json
 
 
-# Solve problem, put in dictionary, json, throw in database
 @shared_task
 def queue_te(te):
     dna_translate = {
@@ -45,7 +44,7 @@ def queue_te(te):
                 total += 1
                 if total >= te.threshold and in_sol is False:
                     in_sol = True
-                    potential[cur_pos] = [x for x in range(x - te.threshold, x)]
+                    potential[cur_pos] = [x for x in range(x - te.threshold + 1, x)]
                     potential[cur_pos].append(x)
                 elif total >= te.threshold and in_sol is not False:
                     potential[cur_pos].append(x)

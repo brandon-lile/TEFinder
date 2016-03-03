@@ -26,9 +26,13 @@
                         {% for size, soln in solns %}
                             <tr>
                                 <td>
-                                    {{ orig }}
-                                    <br />
-                                    {{ soln }}
+                                    {% for org, sol in soln %}
+                                        {{ org }}
+                                        <br />
+                                        {{ sol }}
+                                        <br />
+                                        <br />
+                                    {% endfor %}
                                 </td>
                                 <td>
                                     {{ size }}

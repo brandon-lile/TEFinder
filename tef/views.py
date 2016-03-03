@@ -49,15 +49,40 @@ def review(request, te_id):
 
     # Create generator
     def sol_gen():
+        solutions = []
         solns = sorted(te.solution, key=lambda k: len(te.solution[k]), reverse=True)
         for x in solns:
             soln_str = ""
+            clean_soln = ""
             for y in range(0, len(te.query)):
                 if y in te.solution[x]:
-                    soln_str += dna_translate[te.query[y]] + " "
+                    clean_soln += dna_translate[te.query[y]]
+                    soln_str += dna_translate[te.query[y]]
                 else:
-                    soln_str += ". "
-            yield (len(te.solution[x]), soln_str)
+                    soln_str += "."
+            if soln_str not in solutions:
+                solutions.append(soln_str)
+
+                # Ensure we have matching portion too
+                soln_str = list(soln_str)
+                front_loc = te.query.find(clean_soln[::-1])
+                for z in range(front_loc, front_loc + len(clean_soln)):
+                    soln_str[z] = dna_translate[te.query[z]]
+
+                # Split string up for readability
+                ret_soln = []
+                if len(te.query) > 25:
+                    for i in range(0, len(te.query), 25):
+                        ret_soln.append(
+                            (
+                                " ".join(te.query[i: i + 25]),
+                                " ".join(soln_str[i: i + 25])
+                            )
+                        )
+                else:
+                    ret_soln.append((" ".join(te.query), " ".join(soln_str)))
+
+                yield (len(te.solution[x]), ret_soln)
 
     context = {
         'te': te,
