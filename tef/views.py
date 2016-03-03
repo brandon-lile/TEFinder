@@ -24,7 +24,7 @@ def search(request):
             t.save()
 
             # Throw into celery
-            queue_te.delay(t.id)
+            queue_te(t.id)
 
             return HttpResponseRedirect(reverse('tef:review', args=(t.id,)))
         else:
