@@ -18,7 +18,7 @@ class SearchForm(forms.Form):
     )
     threshold = forms.IntegerField(
         label='Threshold',
-        min_value=0,
+        min_value=1,
         initial=3
     )
 

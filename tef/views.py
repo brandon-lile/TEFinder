@@ -32,7 +32,8 @@ def search(request):
             return render(request, 'tef/index.html', context)
     else:
         context = {
-            'search_form': SearchForm()
+            'search_form': SearchForm(),
+            'title': 'Search'
         }
         return render(request, 'tef/index.html', context)
 
@@ -40,7 +41,7 @@ def search(request):
 def review(request, te_id):
     te = get_object_or_404(TE, pk=te_id)
 
-    if te.solved is True:
+    if te.solved is True and te.solution != "{}":
         te.solution = json.loads(te.solution)
     dna_translate = {
         'A': 'T',
@@ -89,7 +90,7 @@ def review(request, te_id):
     context = {
         'te': te,
         'solns': sol_gen,
-        'orig': " ".join(te.query)
+        'title': 'Review'
     }
 
     return render(request, 'tef/review.html', context)

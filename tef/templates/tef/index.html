@@ -1,4 +1,4 @@
-{% include "tef/layout/header.html" %}
+{% include "tef/layout/header.html" with title=title %}
 <div class="ui middle aligned grid">
     <div class="column">
         <form action="{% url 'tef:search' %}" method="post" class="ui large form">

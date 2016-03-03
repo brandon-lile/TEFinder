@@ -1,4 +1,4 @@
-{% include "tef/layout/header.html" %}
+{% include "tef/layout/header.html" with title=title%}
 <div class="ui middle aligned grid">
     <div class="column">
         <div class="ui stacked segment">
@@ -23,6 +23,12 @@
                         </tr>
                     </thead>
                     <tbody>
+                    {% if te.solution == "{}" %}
+                        <div class="ui info message">
+                            <div class="ui header">No matches found</div>
+                            <p>We're sorry, but no matches could be found. Try revising your search</p>
+                        </div>
+                    {% else %}
                         {% for size, soln in solns %}
                             <tr>
                                 <td>
@@ -39,6 +45,7 @@
                                 </td>
                             </tr>
                         {% endfor %}
+                    {% endif %}
                     </tbody>
                 </table>
             {% endif %}
