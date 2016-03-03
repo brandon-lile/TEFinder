@@ -18,31 +18,22 @@ def queue_te(te_id):
     if te.start_loc > 0:
         te.start_loc = min(te.start_loc, len(te.query))
 
-    # Check if we need to change end_loc
-    #if te.end_loc > 0 and te.end_loc > te.start_loc:
-    #    te.end_loc = min(te.end_loc, len(te.query))
-    #elif 0 < te.end_loc < te.start_loc:
-    #    te.end_loc = te.start_loc
-    #elif te.end_loc == 0:
-    #    te.end_loc = len(te.query)
-
-    #original_query = te.query
-    # May have to change this - indexes could be made wonky above
-    #te.query = te.query[te.start_loc:te.end_loc]
+    # Fix query to right size
+    working_query = te.query[te.start_loc:te.end_loc + 1]
 
     te.reverse_query = ''
     for x in te.query:
         te.reverse_query = dna_translate[x] + te.reverse_query
 
     potential = {}
-    str_len = len(te.query) - 1
+    str_len = len(working_query) - 1
     cur_pos = str_len
     while cur_pos >= 0:
         total = 0
         in_sol = False
         for x in range(cur_pos, str_len):
             # Compare base by base
-            if te.query[x] == te.reverse_query[x - cur_pos]:
+            if working_query[x] == te.reverse_query[x - cur_pos]:
                 total += 1
                 if total >= te.threshold and in_sol is False:
                     in_sol = True

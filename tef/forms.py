@@ -29,7 +29,7 @@ class SearchForm(forms.Form):
     def clean_end_loc(self):
         loc = self.cleaned_data['end_loc']
         size = len(self.cleaned_data['query'])
-        if loc == 0:
+        if loc == 0 or loc > size - 1:
             return size - 1
         else:
             return loc
