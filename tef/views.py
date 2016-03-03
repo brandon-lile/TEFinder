@@ -24,7 +24,7 @@ def search(request):
             t.save()
 
             # Throw into celery
-            queue_te(t)
+            queue_te.delay(t.id)
 
             return HttpResponseRedirect(reverse('tef:review', args=(t.id,)))
         else:
@@ -39,7 +39,9 @@ def search(request):
 
 def review(request, te_id):
     te = get_object_or_404(TE, pk=te_id)
-    te.solution = json.loads(te.solution)
+
+    if te.solved is True:
+        te.solution = json.loads(te.solution)
     dna_translate = {
         'A': 'T',
         'T': 'A',
