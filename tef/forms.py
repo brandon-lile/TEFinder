@@ -1,10 +1,12 @@
 from django import forms
+import re
 
 
 class SearchForm(forms.Form):
     query = forms.RegexField(
-        '^[ACTGactg]+$',
-        label='DNA Sequence'
+        r'>(.)*\n([ACTGactg\r\n]*)$',
+        label='FASTA Sequence',
+        widget=forms.Textarea
     )
     start_loc = forms.IntegerField(
         label='Start Location',
@@ -24,14 +26,20 @@ class SearchForm(forms.Form):
 
     def clean_query(self):
         data = self.cleaned_data['query']
+        data = re.sub(r'>(.)*\n', '', data)
+        data = re.sub(r'(\r\n)*', '', data)
         return data.upper()
 
     def clean_end_loc(self):
         loc = self.cleaned_data['end_loc']
-        size = len(self.cleaned_data['query'])
-        if loc == 0 or loc > size - 1:
-            return size - 1
+        if 'query' in self.cleaned_data:
+            size = len(self.cleaned_data['query'])
+            if loc == 0 or loc > size - 1:
+                return size - 1
+            else:
+                return loc
         else:
+            # Doesn't matter
             return loc
 
     def clean(self):

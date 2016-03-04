@@ -29,22 +29,20 @@ def queue_te(te_id):
     str_len = len(working_query) - 1
     cur_pos = str_len
     while cur_pos >= 0:
-        total = 0
-        in_sol = False
-        for x in range(cur_pos, str_len):
-            # Compare base by base
-            if working_query[x] == te.reverse_query[x - cur_pos]:
-                total += 1
-                if total >= te.threshold and in_sol is False:
-                    in_sol = True
-                    potential[cur_pos] = [x for x in range(x - te.threshold + 1, x)]
-                    potential[cur_pos].append(x)
-                elif total >= te.threshold and in_sol is not False:
-                    potential[cur_pos].append(x)
-            else:
-                in_sol = False
-                total = 0
-
+        rev_loc = 0
+        max_rev = str_len - cur_pos
+        while rev_loc <= max_rev:
+            query_loc = cur_pos + rev_loc
+            if working_query[query_loc] == te.reverse_query[rev_loc]:
+                if cur_pos not in potential:
+                    potential[cur_pos] = [query_loc, str_len - rev_loc]
+                else:
+                    potential[cur_pos].append(query_loc)
+                    potential[cur_pos].append(str_len - rev_loc)
+            rev_loc += 1
+        else:
+            if cur_pos in potential and len(potential[cur_pos]) < te.threshold:
+                potential[cur_pos] = []
         cur_pos -= 1
 
     te.solution = json.dumps(potential)
