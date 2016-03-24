@@ -27,4 +27,4 @@ class Solution(models.Model):
     distance = models.IntegerField(null=False, blank=False)
 
     def __str__(self):
-        return self.search
+        return str(self.percentage)

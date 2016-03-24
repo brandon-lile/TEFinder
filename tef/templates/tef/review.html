@@ -19,29 +19,27 @@
                     <thead>
                         <tr>
                             <th>Sequence</th>
-                            <th>Matches</th>
+                            <th>Percentage</th>
+                            <th>Distance</th>
                         </tr>
                     </thead>
                     <tbody>
-                    {% if te.solution == "[]" %}
+                    {% if soln_count == 0 %}
                         <div class="ui info message">
                             <div class="ui header">No matches found</div>
                             <p>We're sorry, but no matches could be found. Try revising your search</p>
                         </div>
                     {% else %}
-                        {% for size, soln in solns %}
+                        {% for sol in soln %}
                             <tr>
                                 <td>
-                                    {% for org, sol in soln %}
-                                        {{ org }}
-                                        <br />
-                                        {{ sol }}
-                                        <br />
-                                        <br />
-                                    {% endfor %}
+                                    {{ sol.solution | linebreaks }}
                                 </td>
                                 <td>
-                                    {{ size }}
+                                    {{ sol.percentage }}
+                                </td>
+                                <td>
+                                    {{ sol.distance }}
                                 </td>
                             </tr>
                         {% endfor %}

@@ -115,10 +115,13 @@ def analyze_solutions(tef, solutions):
                         perc_match = (num_matches / inner_dist) * 100
                         if perc_match >= tef.threshold:
 
+                            # Get solution string
+                            soln_str = make_soln_str(tef, matches[x:end_loc])
+
                             # Create a solution
                             sol = Solution(
                                 te=tef,
-                                solution=json.dumps({pos: matches[x:end_loc]}),
+                                solution=soln_str,
                                 percentage=perc_match,
                                 distance=inner_dist
                             )
@@ -129,3 +132,48 @@ def analyze_solutions(tef, solutions):
             else:
                 # List = sorted. Anything past index will be < te.distance
                 break
+
+
+def make_soln_str(tef, bases):
+    # Utility vars
+    last = bases[-1] if bases[-1] == len(tef.query) - 1 else bases[-1] + 1
+    dna_translate = {
+        'A': 'T',
+        'T': 'A',
+        'C': 'G',
+        'G': 'C'
+    }
+
+    orig_query = tef.query[bases[0]:last]
+    soln_str = ''
+
+    # x represents location in orig query
+    for x in range(bases[0], bases[-1]):
+        if x in bases:
+            soln_str += dna_translate[tef.query[x]]
+        else:
+            soln_str += '-'
+
+    # Combine the two into soln string
+    final_str = ''
+
+    if len(soln_str) > 25:
+        for i in range(0, len(orig_query), 25):
+            # Give the start base
+            if i == 0:
+                desc_str = "[Base #: " + str(bases[0]) + "]"
+                final_str += desc_str \
+                         + " ".join(orig_query[i: i + 25]) \
+                         + '\r\n' \
+                         + "-" * len(desc_str) \
+                         + " ".join(soln_str[i: i + 25]) \
+                         + '\r\n\r\n'
+
+            final_str += " ".join(orig_query[i: i + 25]) \
+                         + '\r\n' \
+                         + " ".join(soln_str[i: i + 25]) \
+                         + '\r\n\r\n'
+    else:
+        final_str += " ".join(orig_query) + '\r\n' + " ".join(soln_str)
+
+    return final_str

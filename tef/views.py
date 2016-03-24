@@ -4,7 +4,7 @@ from django.core.urlresolvers import reverse
 import json
 from .forms import SearchForm
 from .tasks import queue_te
-from .models import TE
+from .models import TE, Solution
 
 
 # Shows search page
@@ -40,47 +40,16 @@ def search(request):
 def review(request, te_id):
     te = get_object_or_404(TE, pk=te_id)
 
-    if te.solved is True and te.solution != "{}":
-        te.solution = json.loads(te.solution)
-    dna_translate = {
-        'A': 'T',
-        'T': 'A',
-        'C': 'G',
-        'G': 'C'
-    }
+    if te.solved:
+        solved = True
 
-    # Create generator
-    all_soln = []
-    solns = sorted(te.solution.values(), key=len, reverse=True)
-    for x in solns:
-        matches = 0
-        if x is not None:
-            soln_str = ""
-            for y in range(0, len(te.query)):
-                if y in x:
-                    soln_str += dna_translate[te.query[y]]
-                    matches += 1
-                else:
-                    soln_str += "."
-
-            # Split string up for readability
-            ret_soln = []
-            if len(te.query) > 25:
-                for i in range(0, len(te.query), 25):
-                    ret_soln.append(
-                        (
-                            " ".join(te.query[i: i + 25]),
-                            " ".join(soln_str[i: i + 25])
-                        )
-                    )
-            else:
-                ret_soln.append((" ".join(te.query), " ".join(soln_str)))
-
-            all_soln.append((matches, ret_soln))
+    soln = Solution.objects.filter(te=te_id).order_by('-percentage')
 
     context = {
         'te': te,
-        'solns': all_soln,
+        'solved': solved,
+        'soln': soln,
+        'soln_count': soln.count(),
         'title': 'Review'
     }
 
