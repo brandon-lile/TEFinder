@@ -13,8 +13,15 @@ class TE(models.Model):
     threshold = models.IntegerField(default=0)
     query_date = models.DateTimeField(auto_now_add=True)
     solved = models.BooleanField(default=False)
-    solution = models.TextField(null=True, blank=False)
     distance = models.IntegerField(default=0)
 
     def __str__(self):
         return self.query
+
+
+class Solution(models.Model):
+    search = models.ForeignKey(TE,
+                               on_delete=models.CASCADE)
+    solution = models.TextField(null=True, blank=False)
+    percentage = models.DecimalField(max_digits=3, decimal_places=1)
+    distance = models.IntegerField(null=False, blank=False)

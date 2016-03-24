@@ -14,5 +14,5 @@ def queue_te(te_id):
         'G': 'C'
     }
 
-    
+
     return None
