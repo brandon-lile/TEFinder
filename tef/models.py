@@ -20,8 +20,11 @@ class TE(models.Model):
 
 
 class Solution(models.Model):
-    search = models.ForeignKey(TE,
-                               on_delete=models.CASCADE)
+    te = models.ForeignKey(TE,
+                           on_delete=models.CASCADE)
     solution = models.TextField(null=True, blank=False)
     percentage = models.DecimalField(max_digits=3, decimal_places=1)
     distance = models.IntegerField(null=False, blank=False)
+
+    def __str__(self):
+        return self.search

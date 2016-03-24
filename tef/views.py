@@ -17,7 +17,8 @@ def search(request):
             # Create original object
             t = TE(
                 query=form.cleaned_data['query'],
-                threshold=form.cleaned_data['threshold']
+                threshold=form.cleaned_data['threshold'],
+                distance=form.cleaned_data['distance']
             )
             t.save()
 
