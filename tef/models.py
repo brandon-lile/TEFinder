@@ -14,8 +14,6 @@ class TE(models.Model):
     query_date = models.DateTimeField(auto_now_add=True)
     solved = models.BooleanField(default=False)
     solution = models.TextField(null=True, blank=False)
-    start_loc = models.IntegerField(default=0)
-    end_loc = models.IntegerField(default=0)
 
     def __str__(self):
         return self.query
