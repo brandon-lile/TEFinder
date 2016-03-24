@@ -13,6 +13,11 @@ class SearchForm(forms.Form):
         min_value=1,
         initial=60
     )
+    distance = forms.IntegerField(
+        label='Distance',
+        min_value=1,
+        initial=50
+    )
 
     def clean_query(self):
         data = self.cleaned_data['query']

@@ -10,17 +10,11 @@
                     enter your FASTA sequence in box below and hit enter.</p>
                     <ul class="list">
                         <li>
-                            You can customize your search by specifying a start and ending region to search through. We recommend doing the search without location constraints, but if you have to, you should know the following:
+                            Threshold and Distance allow you to control how precise the search is.
                             <ul class="list">
-                                <li>0 represents the first base in the sequence.</li>
-                                <li>0 for start location will start from the beginning.</li>
-                                <li>0 for end location will search to the end of the sequence.</li>
-                            </ul>
-                        </li>
-                        <li>
-                            Threshold allows you to specify the minimum number of matches before declaring it a successful match.
-                            <ul class="list">
-                                <li>Depending on the size of your sequence, a larger threshold may be a good idea.</li>
+                                <li>Threshold is the percentage of matches you would like over the distance specified.</li>
+                                <li>Distance is the minimum total distance that we should consider a threshold for.</li>
+                                <li>For example, 33 matches over a distance of 50 bases would be caught with a maximum of 66% threshold.</li>
                             </ul>
                         </li>
                     </ul>
